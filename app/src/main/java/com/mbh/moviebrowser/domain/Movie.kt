@@ -28,13 +28,7 @@ data class Movie(
         }
 
         fun mapList(dataModeList: List<MovieDataModel>): List<Movie> {
-            val movieList = ArrayList<Movie>()
-
-            dataModeList.forEach { dataModel ->
-                movieList.add(map(dataModel))
-            }
-
-            return movieList
+            return dataModeList.map { map(it) }
         }
     }
 }

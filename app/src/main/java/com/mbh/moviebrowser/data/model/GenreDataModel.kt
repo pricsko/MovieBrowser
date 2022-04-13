@@ -15,13 +15,7 @@ data class GenreDataModel(@PrimaryKey val id: Long, val name: String) {
         }
 
         fun mapList(apiModelList: List<GenreApiModel>): List<GenreDataModel> {
-            val dataModelList = ArrayList<GenreDataModel>()
-
-            apiModelList.forEach { apiModel ->
-                dataModelList.add(map(apiModel))
-            }
-
-            return dataModelList
+            return apiModelList.map { map(it) }
         }
     }
 }

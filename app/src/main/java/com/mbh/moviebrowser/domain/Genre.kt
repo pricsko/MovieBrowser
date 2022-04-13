@@ -10,13 +10,7 @@ data class Genre(val id: Long, val name: String) {
         }
 
         fun mapList(dataModeList: List<GenreDataModel>): List<Genre> {
-            val genreList = ArrayList<Genre>()
-
-            dataModeList.forEach { dataModel ->
-                genreList.add(map(dataModel))
-            }
-
-            return genreList
+            return dataModeList.map { map(it) }
         }
     }
 }
