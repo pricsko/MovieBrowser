@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.mbh.moviebrowser.util.SharedElementArgs" />
+
+        <variable
+            name="movie"
+            type="com.mbh.moviebrowser.domain.Movie" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/gridItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/cover"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:importantForAccessibility="no"
+            android:scaleType="fitXY"
+            android:transitionName="@{SharedElementArgs.MOVIE_COVER_IMAGE_VIEW+movie.id}"
+            app:layout_constraintDimensionRatio="2:3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/sample_poster" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="150dp"
+            android:alpha="0.6"
+            android:background="@drawable/bg_gradient_black"
+            android:rotation="180"
+            app:layout_constraintEnd_toEndOf="@+id/cover"
+            app:layout_constraintStart_toStartOf="@+id/cover"
+            app:layout_constraintTop_toTopOf="@+id/cover" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_marginHorizontal="8dp"
+            android:autoSizeMaxTextSize="16sp"
+            android:autoSizeMinTextSize="10sp"
+            android:autoSizePresetSizes="1sp"
+            android:autoSizeTextType="uniform"
+            android:maxLines="1"
+            android:text="@{movie.title}"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:transitionName="@{SharedElementArgs.MOVIE_TITLE_TEXT_VIEW+movie.id}"
+            app:layout_constraintEnd_toEndOf="@+id/cover"
+            app:layout_constraintStart_toStartOf="@+id/cover"
+            app:layout_constraintTop_toTopOf="@+id/cover"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="The Ice Age Adventures of Buck Wild" />
+
+        <TextView
+            android:id="@+id/genres"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:alpha="0.9"
+            android:text="@{movie.genres}"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title"
+            tools:text="Family, Comedy" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:background="@drawable/bg_gradient_white"
+            app:layout_constraintBottom_toBottomOf="@id/cover"
+            app:layout_constraintEnd_toEndOf="@+id/cover"
+            app:layout_constraintStart_toStartOf="@+id/cover" />
+
+        <com.willy.ratingbar.ScaleRatingBar
+            android:id="@+id/simpleRatingBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/cover"
+            app:layout_constraintEnd_toEndOf="@+id/cover"
+            app:layout_constraintStart_toStartOf="@+id/cover"
+            app:srb_clearRatingEnabled="false"
+            app:srb_clickable="false"
+            app:srb_drawableEmpty="@drawable/empty"
+            app:srb_drawableFilled="@drawable/filled"
+            app:srb_isIndicator="false"
+            app:srb_minimumStars="1"
+            app:srb_numStars="5"
+            app:srb_scrollable="false"
+            app:srb_starHeight="18dp"
+            app:srb_starPadding="4dp"
+            app:srb_starWidth="18dp"
+            app:srb_stepSize="0.5" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

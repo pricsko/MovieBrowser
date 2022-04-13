@@ -1,0 +1,97 @@
+ext {
+    versions = [
+            // Core
+            "kotlin"               : "1.5.30",
+            "ktx"                  : "1.6.0",
+            "appCompat"            : "1.3.1",
+            "material"             : "1.4.0",
+            "constraintLayout"     : "2.1.0",
+
+            // Networking
+            "retrofit"             : "2.9.0",
+            "retrofitGsonConverter": "2.9.0",
+            "retrofitRxAdapter"    : "2.9.0",
+            "okhttp"               : "4.9.1",
+
+            // Flow
+            "coroutines"           : "1.4.3",
+
+            // DI
+            "dagger"               : "2.33",
+
+            // JetPack
+            "navigation"           : "2.3.5",
+            "datastore"            : "1.0.0",
+            "room"                 : "2.4.0",
+            "lifecycle"            : "2.4.0",
+
+            // Util
+            "glide"                : "4.12.0",
+            "threeTen"             : "1.3.0",
+
+            // Gson
+            "gson"                 : "2.8.6",
+
+            // RX
+            "rxAndroid"            : "3.0.0",
+
+            // RatingBar
+            "ratingBar"            : "1.5.1",
+    ]
+
+    core = [
+            "kotlin"   : "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}",
+            "ktx"      : "androidx.core:core-ktx:${versions.ktx}",
+            "appCompat": "androidx.appcompat:appcompat:${versions.appCompat}",
+            "material" : "com.google.android.material:material:${versions.material}"
+    ]
+
+    ui = [
+            "constraintLayout"  : "androidx.constraintlayout:constraintlayout:${versions.constraintLayout}",
+            "glide"             : "com.github.bumptech.glide:glide:${versions.glide}",
+            "lifecycleViewModel": "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.lifecycle}",
+            "lifecycleLiveData" : "androidx.lifecycle:lifecycle-livedata-ktx:${versions.lifecycle}",
+            "lifecycleRuntime"  : "androidx.lifecycle:lifecycle-runtime-ktx:${versions.lifecycle}",
+            "lifecycleProcess"  : "androidx.lifecycle:lifecycle-process:${versions.lifecycle}",
+    ]
+
+    navigation = [
+            "navigationFragment": "androidx.navigation:navigation-fragment-ktx:${versions.navigation}",
+            "navigationUi"      : "androidx.navigation:navigation-ui-ktx:${versions.navigation}"
+    ]
+
+    data = [
+            "retrofit"         : "com.squareup.retrofit2:retrofit:${versions.retrofit}",
+            "retrofitConverter": "com.squareup.retrofit2:converter-gson:${versions.retrofitGsonConverter}",
+            "retrofitRxAdapter": "com.squareup.retrofit2:adapter-rxjava3:${versions.retrofitRxAdapter}",
+            'dataStore'        : "androidx.datastore:datastore-preferences:${versions.datastore}",
+            "room"             : "androidx.room:room-runtime:${versions.room}",
+            "roomKtx"          : "androidx.room:room-ktx:${versions.room}",
+            "roomRx"           : "androidx.room:room-rxjava3:${versions.room}",
+            "okhttpLogger"     : "com.squareup.okhttp3:logging-interceptor:${versions.okhttp}"
+    ]
+
+    coroutines = [
+            "coroutines": "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.coroutines}"
+    ]
+
+    di = [
+            "dagger": "com.google.dagger:dagger:${versions.dagger}"
+    ]
+
+    utils = [
+            "threeten" : "com.jakewharton.threetenabp:threetenabp:${versions.threeTen}",
+            "gson"     : "com.google.code.gson:gson:${versions.gson}",
+            "ratingBar": "com.github.ome450901:SimpleRatingBar:${versions.ratingBar}"
+    ]
+
+    annotation = [
+            "dagger": "com.google.dagger:dagger-compiler:${versions.dagger}",
+            "room"  : "androidx.room:room-compiler:${versions.room}"
+    ]
+
+    rx = [
+            "rxandroid": "io.reactivex.rxjava3:rxandroid:${versions.rxAndroid}",
+            "rxjava"   : "io.reactivex.rxjava3:rxjava:${versions.rxAndroid}"
+    ]
+}

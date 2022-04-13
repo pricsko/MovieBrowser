@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation.xml"
+    app:startDestination="@id/movieListGrid">
+
+    <fragment
+        android:id="@+id/movieList"
+        android:name="com.mbh.moviebrowser.features.movieList.MovieListFragment"
+        android:label="Movie List"
+        tools:layout="@layout/fragment_movie_list">
+
+        <action
+            android:id="@+id/toMovieDetails"
+            app:destination="@id/movieDetails" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/movieListGrid"
+        android:name="com.mbh.moviebrowser.features.movieListGrid.MovieListGridFragment"
+        android:label="Movie List Grid"
+        tools:layout="@layout/fragment_movie_list_grid">
+
+        <action
+            android:id="@+id/toMovieDetailsPager"
+            app:destination="@id/movieDetailsPager" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/movieDetails"
+        android:name="com.mbh.moviebrowser.features.movieDetails.MovieDetailsFragment"
+        android:label="Movie Details"
+        tools:layout="@layout/fragment_movie_details">
+
+        <argument
+            android:name="movieId"
+            app:argType="string" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/movieDetailsPager"
+        android:name="com.mbh.moviebrowser.features.movieDetailsPager.MovieDetailsPagerFragment"
+        android:label="Movie Details Pager"
+        tools:layout="@layout/fragment_movie_details_pager">
+
+        <argument
+            android:name="movieId"
+            app:argType="string" />
+
+        <argument
+            android:name="index"
+            app:argType="integer" />
+
+        <action
+            android:id="@+id/toMovieListGrid"
+            app:destination="@+id/movieListGrid" />
+
+    </fragment>
+
+</navigation>

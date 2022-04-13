@@ -1,0 +1,90 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
+}
+
+android {
+    compileSdk 32
+
+    defaultConfig {
+        applicationId "com.mbh.moviebrowser"
+        minSdk 24
+        targetSdk 32
+        versionCode 1
+        versionName "1.0"
+
+        buildConfigField 'String', 'API_KEY', "\"0b1a18e2b899d214aba36f03889b819e\""
+        buildConfigField 'String', 'BASE_URL', "\"https://api.themoviedb.org/3\""
+        buildConfigField 'String', 'IMAGE_BASE_URL', "\"https://image.tmdb.org/t/p/original\""
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        dataBinding true
+    }
+}
+
+dependencies {
+    // Core
+    implementation core.kotlin
+    implementation core.ktx
+    implementation core.appCompat
+    implementation core.material
+
+    // UI
+    implementation ui.constraintLayout
+    implementation ui.glide
+    implementation ui.lifecycleViewModel
+    implementation ui.lifecycleLiveData
+    implementation ui.lifecycleRuntime
+    implementation ui.lifecycleProcess
+
+    // Navigation
+    implementation navigation.navigationFragment
+    implementation navigation.navigationUi
+
+    // Data
+    implementation data.retrofit
+    implementation data.retrofitConverter
+    implementation data.retrofitRxAdapter
+    implementation data.dataStore
+    implementation data.room
+    implementation data.roomKtx
+    implementation data.roomRx
+    implementation data.okhttpLogger
+
+    // Coroutines
+    implementation coroutines.coroutines
+
+    // DI
+    implementation di.dagger
+
+    // Utils
+    implementation utils.threeten
+    implementation utils.gson
+    implementation utils.ratingBar
+
+    // Kapt
+    kapt annotation.dagger
+    kapt annotation.room
+
+    // RX
+    implementation rx.rxandroid
+    implementation rx.rxjava
+}
