@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigator
+import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.transition.Transition
@@ -12,7 +13,7 @@ import androidx.transition.TransitionInflater
 import com.mbh.moviebrowser.R
 import com.mbh.moviebrowser.databinding.FragmentMovieListGridBinding
 import com.mbh.moviebrowser.domain.Movie
-import com.mbh.moviebrowser.features.BaseFragment
+import com.mbh.moviebrowser.features.SharedElementFragment
 import com.mbh.moviebrowser.features.movieList.MovieListViewModel
 import com.mbh.moviebrowser.features.movieListGrid.adapeter.MovieGridAdapter
 import com.mbh.moviebrowser.injection.InjectionManager
@@ -20,7 +21,7 @@ import com.mbh.moviebrowser.util.getNavigationResult
 import kotlin.math.max
 
 
-class MovieListGridFragment : BaseFragment<MovieListViewModel>() {
+class MovieListGridFragment : SharedElementFragment<MovieListViewModel>() {
 
     companion object {
         private var selectedIndex = 0
@@ -42,24 +43,32 @@ class MovieListGridFragment : BaseFragment<MovieListViewModel>() {
         }
 
         viewModel.selectedMovie.observe(this) { (movie, sharedElements) ->
-            val fragmentDirections =
-                MovieListGridFragmentDirections.toMovieDetailsPager(
-                    movie.id.toString(),
-                    selectedIndex
-                )
-            findNavController().navigate(fragmentDirections, sharedElements)
+            if ((sharedElements as FragmentNavigator.Extras).sharedElements.isEmpty()) {
+
+            } else {
+                val fragmentDirections =
+                    MovieListGridFragmentDirections.toMovieDetailsPager(
+                        movie.id.toString(),
+                        selectedIndex
+                    )
+                findNavController().navigate(fragmentDirections, sharedElements)
+            }
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun setUpSharedElementTransitions() {
+        exitTransition =
+            TransitionInflater.from(context)
+                .inflateTransition(R.transition.grid_exit_transition)
+        val transition: Transition = TransitionInflater.from(context)
+            .inflateTransition(R.transition.image_shared_element_transition)
+        sharedElementEnterTransition = transition
+        postponeEnterTransition()
+    }
+
+    override fun setUpBinding(inflater: LayoutInflater, container: ViewGroup?): View {
         binding = FragmentMovieListGridBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
-
-        setUpSharedElementTransitions()
 
         return binding.root
     }
@@ -71,7 +80,6 @@ class MovieListGridFragment : BaseFragment<MovieListViewModel>() {
 
     private fun initRecyclerView(movies: List<Movie>) {
         if (movies.isNotEmpty()) {
-            // TODO: preload elements for smoother animation between grid and pager
             val returnPositionResult = getNavigationResult()
             returnPositionResult?.value?.let { returnPositionString ->
                 val returnPosition = returnPositionString.toInt()
@@ -87,7 +95,12 @@ class MovieListGridFragment : BaseFragment<MovieListViewModel>() {
                 startPostponedEnterTransition()
             }
             val movieAdapter =
-                MovieGridAdapter(movies, movieSelectionListener, onImageReadyListener)
+                MovieGridAdapter(
+                    movies,
+                    selectedIndex,
+                    movieSelectionListener,
+                    onImageReadyListener
+                )
 
             binding.moviesRecyclerView.apply {
                 setHasFixedSize(true)
@@ -102,15 +115,5 @@ class MovieListGridFragment : BaseFragment<MovieListViewModel>() {
             // TODO: empty screen with retry button
             // TODO: separate function, so it can be called immediately after no internet detected
         }
-    }
-
-    private fun setUpSharedElementTransitions() {
-        exitTransition =
-            TransitionInflater.from(context)
-                .inflateTransition(R.transition.grid_exit_transition)
-        val transition: Transition = TransitionInflater.from(context)
-            .inflateTransition(R.transition.image_shared_element_transition)
-        sharedElementEnterTransition = transition
-        postponeEnterTransition()
     }
 }

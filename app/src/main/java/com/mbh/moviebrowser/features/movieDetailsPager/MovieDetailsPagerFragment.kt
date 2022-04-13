@@ -18,13 +18,14 @@ import com.mbh.moviebrowser.R
 import com.mbh.moviebrowser.databinding.FragmentMovieDetailsPagerBinding
 import com.mbh.moviebrowser.domain.Movie
 import com.mbh.moviebrowser.features.BaseFragment
+import com.mbh.moviebrowser.features.SharedElementFragment
 import com.mbh.moviebrowser.features.movieDetailsPager.adapter.MovieDetailsAdapter
 import com.mbh.moviebrowser.features.movieDetailsPager.adapter.MovieDetailsViewHolder
 import com.mbh.moviebrowser.features.movieList.MovieListViewModel
 import com.mbh.moviebrowser.injection.InjectionManager
 import com.mbh.moviebrowser.util.setNavigationResult
 
-class MovieDetailsPagerFragment : BaseFragment<MovieListViewModel>() {
+class MovieDetailsPagerFragment : SharedElementFragment<MovieListViewModel>() {
 
     private lateinit var binding: FragmentMovieDetailsPagerBinding
     private val navArgs: MovieDetailsPagerFragmentArgs by navArgs()
@@ -43,58 +44,14 @@ class MovieDetailsPagerFragment : BaseFragment<MovieListViewModel>() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun setUpBinding(inflater: LayoutInflater, container: ViewGroup?): View {
         binding = FragmentMovieDetailsPagerBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
 
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setUpSharedElementTransitions()
-        activity?.let { viewModel.fetchMovies(it) }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        setNavigationResult(binding.moviesPager.currentItem.toString())
-    }
-
-    fun navigateBack() {
-        val viewHolder =
-            (binding.moviesPager[0] as RecyclerView).findViewHolderForAdapterPosition(binding.moviesPager.currentItem) as? MovieDetailsViewHolder
-                ?: return
-        val sharedElements = FragmentNavigator.Extras.Builder()
-            .addSharedElements(
-                mapOf(
-                    viewHolder.binding.cover to viewHolder.binding.cover.transitionName
-                )
-            ).build()
-        findNavController().navigate(R.id.toMovieListGrid, null, null, sharedElements)
-    }
-
-    private fun initPager(movies: List<Movie>) {
-        if (movies.isNotEmpty()) {
-            val movieDetailsAdapter = MovieDetailsAdapter(movies) {
-                startPostponedEnterTransition()
-            }
-            binding.moviesPager.apply {
-                offscreenPageLimit = movies.size
-                orientation = ORIENTATION_HORIZONTAL
-                adapter = movieDetailsAdapter
-                setCurrentItem(navArgs.index, false)
-            }
-        } else {
-            startPostponedEnterTransition()
-        }
-    }
-
-    private fun setUpSharedElementTransitions() {
+    override fun setUpSharedElementTransitions() {
         val transition: Transition = TransitionInflater.from(context)
             .inflateTransition(R.transition.image_shared_element_transition)
         transition.addListener(object : Transition.TransitionListener {
@@ -143,4 +100,45 @@ class MovieDetailsPagerFragment : BaseFragment<MovieListViewModel>() {
 
         postponeEnterTransition()
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        activity?.let { viewModel.fetchMovies(it) }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        setNavigationResult(binding.moviesPager.currentItem.toString())
+    }
+
+    fun navigateBack() {
+        val viewHolder =
+            (binding.moviesPager[0] as RecyclerView).findViewHolderForAdapterPosition(binding.moviesPager.currentItem) as? MovieDetailsViewHolder
+                ?: return
+        val sharedElements = FragmentNavigator.Extras.Builder()
+            .addSharedElements(
+                mapOf(
+                    viewHolder.binding.cover to viewHolder.binding.cover.transitionName
+                )
+            ).build()
+        findNavController().navigate(R.id.toMovieListGrid, null, null, sharedElements)
+    }
+
+    private fun initPager(movies: List<Movie>) {
+        if (movies.isNotEmpty()) {
+            val movieDetailsAdapter = MovieDetailsAdapter(movies) {
+                startPostponedEnterTransition()
+            }
+            binding.moviesPager.apply {
+                offscreenPageLimit = movies.size
+                orientation = ORIENTATION_HORIZONTAL
+                adapter = movieDetailsAdapter
+                setCurrentItem(navArgs.index, false)
+            }
+        } else {
+            startPostponedEnterTransition()
+        }
+    }
+
+
 }

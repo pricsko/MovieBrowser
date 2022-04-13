@@ -11,6 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger
 
 class MovieGridAdapter(
     private val items: List<Movie>,
+    private val selectedIndex: Int,
     private val movieSelectionListener: (Movie, Int, Navigator.Extras) -> Unit,
     private val onImageReadyListener: () -> Unit
 ) : RecyclerView.Adapter<MovieGridViewHolder>() {
@@ -36,6 +37,7 @@ class MovieGridAdapter(
         binding = ItemMovieGridBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MovieGridViewHolder(
             binding,
+            selectedIndex,
             movieSelectionListener,
             onImageReadyListener,
             getGridWidth(parent.context)

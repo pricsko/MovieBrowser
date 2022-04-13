@@ -14,6 +14,7 @@ import com.mbh.moviebrowser.domain.Movie
 
 class MovieGridViewHolder(
     val binding: ItemMovieGridBinding,
+    private val selectedIndex: Int,
     private val movieSelectionListener: (Movie, Int, Navigator.Extras) -> Unit,
     private val onImageReadyListener: () -> Unit,
     width: Int
@@ -53,7 +54,11 @@ class MovieGridViewHolder(
                     target: Target<Drawable>?,
                     isFirstResource: Boolean
                 ): Boolean {
-                    onImageReadyListener.invoke()
+                    // In case of positionChanged on pager side
+                    // wait for the new element before start enter transition
+                    if (adapterPosition == selectedIndex) {
+                        onImageReadyListener.invoke()
+                    }
                     return false
                 }
 
@@ -64,7 +69,11 @@ class MovieGridViewHolder(
                     dataSource: DataSource?,
                     isFirstResource: Boolean
                 ): Boolean {
-                    onImageReadyListener.invoke()
+                    // In case of positionChanged on pager side
+                    // wait for the new element before start enter transition
+                    if (adapterPosition == selectedIndex) {
+                        onImageReadyListener.invoke()
+                    }
                     return false
                 }
 

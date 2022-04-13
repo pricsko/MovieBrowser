@@ -11,4 +11,6 @@ interface MovieInteractor {
 
     fun getMovieById(movieId: Long): Single<Movie>
 
+    fun clearDataBase()
+
 }
