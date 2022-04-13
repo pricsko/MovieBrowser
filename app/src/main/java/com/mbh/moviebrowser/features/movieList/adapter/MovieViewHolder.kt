@@ -7,7 +7,7 @@ import com.mbh.moviebrowser.databinding.ItemMovieBinding
 import com.mbh.moviebrowser.domain.Movie
 
 class MovieViewHolder(
-    val binding: ItemMovieBinding,
+    private val binding: ItemMovieBinding,
     private val movieSelectionListener: (Movie, Navigator.Extras) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
