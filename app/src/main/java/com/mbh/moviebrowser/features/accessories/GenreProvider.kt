@@ -16,7 +16,8 @@ object GenreProvider {
     fun mapGenres(genreIdList: List<Long>): String {
         return when {
             genreIdList.isEmpty() -> ""
-            else -> genreIdList.map { genreMap[it] }.joinToString(",")
+            else -> genreIdList.filter { genreMap[it] != null }.map { genreMap[it] }
+                .joinToString(",")
         }
     }
 
