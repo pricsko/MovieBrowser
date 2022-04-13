@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.navigation.Navigator
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.transition.Transition
 import androidx.transition.TransitionInflater
 import com.mbh.moviebrowser.R
 import com.mbh.moviebrowser.databinding.FragmentMovieListGridBinding
@@ -55,9 +54,9 @@ class MovieListGridFragment : SharedElementFragment<MovieListViewModel>() {
         exitTransition =
             TransitionInflater.from(context)
                 .inflateTransition(R.transition.grid_exit_transition)
-        val transition: Transition = TransitionInflater.from(context)
-            .inflateTransition(R.transition.image_shared_element_transition)
-        sharedElementEnterTransition = transition
+        sharedElementEnterTransition =
+            TransitionInflater.from(context)
+                .inflateTransition(R.transition.image_shared_element_transition)
         postponeEnterTransition()
     }
 
