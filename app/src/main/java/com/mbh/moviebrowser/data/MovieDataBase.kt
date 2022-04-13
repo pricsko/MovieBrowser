@@ -21,7 +21,7 @@ abstract class MovieDataBase : RoomDatabase() {
     abstract fun movieDao(): MovieDao
 
     companion object {
-        private const val DB_NAME = "AgoraDB"
+        private const val DB_NAME = "MovieDB"
         private var INSTANCE: MovieDataBase? = null
         private val sRoomDatabaseCallback: Callback = object : Callback() {
             override fun onOpen(db: SupportSQLiteDatabase) {
