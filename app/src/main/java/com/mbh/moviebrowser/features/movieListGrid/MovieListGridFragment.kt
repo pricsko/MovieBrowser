@@ -99,7 +99,7 @@ class MovieListGridFragment : SharedElementFragment<MovieListViewModel>() {
 
             binding.moviesRecyclerView.apply {
                 setHasFixedSize(true)
-                setItemViewCacheSize(movies.size)
+                setItemViewCacheSize(6)
                 layoutManager = GridLayoutManager(context, 2)
                 adapter = movieAdapter
                 // Scroll to (position - 2) so the selected item can be in the middle

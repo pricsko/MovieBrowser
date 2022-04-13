@@ -17,7 +17,6 @@ import androidx.viewpager2.widget.ViewPager2.ORIENTATION_HORIZONTAL
 import com.mbh.moviebrowser.R
 import com.mbh.moviebrowser.databinding.FragmentMovieDetailsPagerBinding
 import com.mbh.moviebrowser.domain.Movie
-import com.mbh.moviebrowser.features.BaseFragment
 import com.mbh.moviebrowser.features.SharedElementFragment
 import com.mbh.moviebrowser.features.movieDetailsPager.adapter.MovieDetailsAdapter
 import com.mbh.moviebrowser.features.movieDetailsPager.adapter.MovieDetailsViewHolder
@@ -130,7 +129,7 @@ class MovieDetailsPagerFragment : SharedElementFragment<MovieListViewModel>() {
                 startPostponedEnterTransition()
             }
             binding.moviesPager.apply {
-                offscreenPageLimit = movies.size
+                offscreenPageLimit = 3
                 orientation = ORIENTATION_HORIZONTAL
                 adapter = movieDetailsAdapter
                 setCurrentItem(navArgs.index, false)
