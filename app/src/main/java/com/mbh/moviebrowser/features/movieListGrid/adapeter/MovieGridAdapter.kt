@@ -31,10 +31,9 @@ class MovieGridAdapter(
         }
     }
 
-    private lateinit var binding: ItemMovieGridBinding
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieGridViewHolder {
-        binding = ItemMovieGridBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemMovieGridBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MovieGridViewHolder(
             binding,
             selectedIndex,
