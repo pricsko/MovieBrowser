@@ -14,16 +14,10 @@ object GenreProvider {
     }
 
     fun mapGenres(genreIdList: List<Long>): String {
-        val builder = StringBuilder()
-
-        genreIdList.forEachIndexed { index, genreId ->
-            val genreString = genreMap[genreId]
-            genreString?.let {
-                if (index > 0) builder.append(",")
-                builder.append(it)
-            }
+        return when {
+            genreIdList.isEmpty() -> ""
+            else -> genreIdList.map { genreMap[it] }.joinToString(",")
         }
-        return builder.toString()
     }
 
 }
