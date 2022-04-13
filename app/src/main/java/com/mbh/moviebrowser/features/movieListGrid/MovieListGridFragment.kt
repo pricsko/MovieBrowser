@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigator
-import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.transition.Transition
@@ -43,16 +42,12 @@ class MovieListGridFragment : SharedElementFragment<MovieListViewModel>() {
         }
 
         viewModel.selectedMovie.observe(this) { (movie, sharedElements) ->
-            if ((sharedElements as FragmentNavigator.Extras).sharedElements.isEmpty()) {
-
-            } else {
-                val fragmentDirections =
-                    MovieListGridFragmentDirections.toMovieDetailsPager(
-                        movie.id.toString(),
-                        selectedIndex
-                    )
-                findNavController().navigate(fragmentDirections, sharedElements)
-            }
+            val fragmentDirections =
+                MovieListGridFragmentDirections.toMovieDetailsPager(
+                    movie.id.toString(),
+                    selectedIndex
+                )
+            findNavController().navigate(fragmentDirections, sharedElements)
         }
     }
 

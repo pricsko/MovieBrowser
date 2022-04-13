@@ -13,7 +13,7 @@ import com.mbh.moviebrowser.databinding.ItemMovieGridBinding
 import com.mbh.moviebrowser.domain.Movie
 
 class MovieGridViewHolder(
-    val binding: ItemMovieGridBinding,
+    private val binding: ItemMovieGridBinding,
     private val selectedIndex: Int,
     private val movieSelectionListener: (Movie, Int, Navigator.Extras) -> Unit,
     private val onImageReadyListener: () -> Unit,

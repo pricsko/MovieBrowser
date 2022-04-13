@@ -12,7 +12,7 @@ import com.mbh.moviebrowser.domain.Movie
 
 class MovieDetailsViewHolder(
     val binding: ItemMoviePagerBinding,
-    val onImageReadyListener: () -> Unit
+    private val onImageReadyListener: () -> Unit
 ) :
     RecyclerView.ViewHolder(binding.root) {
 
