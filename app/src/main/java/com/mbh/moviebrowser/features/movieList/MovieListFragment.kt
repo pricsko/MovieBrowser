@@ -60,7 +60,7 @@ class MovieListFragment : BaseFragment<MovieListViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpSharedElementTransitions()
-        activity?.let { viewModel.fetchMovies(it) }
+        viewModel.fetchMovies()
     }
 
     override fun onPause() {

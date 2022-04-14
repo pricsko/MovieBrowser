@@ -102,7 +102,7 @@ class MovieDetailsPagerFragment : SharedElementFragment<MovieListViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.let { viewModel.fetchMovies(it) }
+        viewModel.fetchMovies()
     }
 
     override fun onPause() {

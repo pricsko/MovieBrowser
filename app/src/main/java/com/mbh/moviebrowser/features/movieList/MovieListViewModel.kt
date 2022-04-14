@@ -1,6 +1,5 @@
 package com.mbh.moviebrowser.features.movieList
 
-import android.app.Activity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.Navigator
@@ -16,7 +15,7 @@ class MovieListViewModel @Inject constructor(private val interactor: MovieIntera
     override val movies: MutableLiveData<List<Movie>> = MutableLiveData()
     override val selectedMovie: MutableLiveData<Pair<Movie, Navigator.Extras>> = MutableLiveData()
 
-    override fun fetchMovies(activity: Activity) {
+    override fun fetchMovies() {
         interactor.getTrendingMovies()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { trendingMovies ->

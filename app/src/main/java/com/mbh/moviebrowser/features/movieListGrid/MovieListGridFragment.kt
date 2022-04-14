@@ -69,7 +69,7 @@ class MovieListGridFragment : SharedElementFragment<MovieListViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.let { viewModel.fetchMovies(it) }
+        viewModel.fetchMovies()
     }
 
     private fun initRecyclerView(movies: List<Movie>) {

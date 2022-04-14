@@ -11,7 +11,7 @@ interface MovieListContract {
         val movies: MutableLiveData<List<Movie>>
         val selectedMovie: MutableLiveData<Pair<Movie, Navigator.Extras>>
 
-        fun fetchMovies(activity: Activity)
+        fun fetchMovies()
         fun movieSelected(movie: Movie, sharedElements: Navigator.Extras)
     }
 
