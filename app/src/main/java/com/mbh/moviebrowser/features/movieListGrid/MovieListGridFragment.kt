@@ -102,7 +102,7 @@ class MovieListGridFragment : SharedElementFragment<MovieListViewModel>() {
                 layoutManager = GridLayoutManager(context, 2)
                 adapter = movieAdapter
                 // Scroll to (position - 2) so the selected item can be in the middle
-                binding.moviesRecyclerView.scrollToPosition(max(selectedIndex - 2, 0))
+                scrollToPosition(max(selectedIndex - 2, 0))
             }
         } else {
             startPostponedEnterTransition()
