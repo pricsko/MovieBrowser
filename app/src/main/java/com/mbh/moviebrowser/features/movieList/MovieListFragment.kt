@@ -70,9 +70,7 @@ class MovieListFragment : BaseFragment<MovieListViewModel>() {
 
     private fun initRecyclerView(movies: List<Movie>) {
         if (movies.isNotEmpty()) {
-            val movieAdapter = MovieAdapter(movies) { movie, sharedElements ->
-                viewModel.movieSelected(movie, sharedElements)
-            }
+            val movieAdapter = MovieAdapter(movies, viewModel::movieSelected)
             binding.moviesRecyclerView.doOnPreDraw { startPostponedEnterTransition() }
             binding.moviesRecyclerView.apply {
                 layoutManager = LinearLayoutManager(context)
