@@ -6,9 +6,17 @@ import android.view.View
 
 object AnimationUtils {
 
-    fun getAlphaAnimatorOfViews(views: Array<View>, duration: Long): AnimatorSet {
+    private const val DEFAULT_ALPHA_START = 0f
+    private const val DEFAULT_ALPHA_END = 1f
+
+    fun getAlphaAnimatorOfViews(
+        views: Array<View>,
+        duration: Long,
+        startValue: Float = DEFAULT_ALPHA_START,
+        endValue: Float = DEFAULT_ALPHA_END
+    ): AnimatorSet {
         val animators = views.map { view ->
-            ObjectAnimator.ofFloat(view, "alpha", 0f, 1f)
+            ObjectAnimator.ofFloat(view, "alpha", startValue, endValue)
                 .setDuration(duration)
         }
         val animatorSet = AnimatorSet()

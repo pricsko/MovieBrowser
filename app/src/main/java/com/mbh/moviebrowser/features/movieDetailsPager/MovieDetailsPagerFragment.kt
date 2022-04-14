@@ -26,6 +26,10 @@ import com.mbh.moviebrowser.util.setNavigationResult
 
 class MovieDetailsPagerFragment : SharedElementFragment<MovieListViewModel>() {
 
+    companion object {
+        private const val DEFAULT_ALPHA_DURATION: Long = 1000
+    }
+
     private lateinit var binding: FragmentMovieDetailsPagerBinding
     private val navArgs: MovieDetailsPagerFragmentArgs by navArgs()
 
@@ -64,7 +68,7 @@ class MovieDetailsPagerFragment : SharedElementFragment<MovieListViewModel>() {
                         it.binding.description,
                         it.binding.title,
                         it.binding.gradient
-                    ), 1000
+                    ), DEFAULT_ALPHA_DURATION
                 ).start()
             }
         })
