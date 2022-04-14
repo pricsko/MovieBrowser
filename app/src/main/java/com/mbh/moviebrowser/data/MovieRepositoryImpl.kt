@@ -3,7 +3,6 @@ package com.mbh.moviebrowser.data
 import com.mbh.moviebrowser.MovieApplication
 import com.mbh.moviebrowser.data.model.GenreDataModel
 import com.mbh.moviebrowser.data.model.MovieDataModel
-import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 import javax.inject.Singleton
 
