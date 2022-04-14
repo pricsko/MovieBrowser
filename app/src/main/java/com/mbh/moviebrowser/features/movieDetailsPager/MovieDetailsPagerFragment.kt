@@ -1,7 +1,5 @@
 package com.mbh.moviebrowser.features.movieDetailsPager
 
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +20,8 @@ import com.mbh.moviebrowser.features.movieDetailsPager.adapter.MovieDetailsAdapt
 import com.mbh.moviebrowser.features.movieDetailsPager.adapter.MovieDetailsViewHolder
 import com.mbh.moviebrowser.features.movieList.MovieListViewModel
 import com.mbh.moviebrowser.injection.InjectionManager
+import com.mbh.moviebrowser.util.AnimationUtils
+import com.mbh.moviebrowser.util.addListeners
 import com.mbh.moviebrowser.util.setNavigationResult
 
 class MovieDetailsPagerFragment : SharedElementFragment<MovieListViewModel>() {
@@ -53,43 +53,20 @@ class MovieDetailsPagerFragment : SharedElementFragment<MovieListViewModel>() {
     override fun setUpSharedElementTransitions() {
         val transition: Transition = TransitionInflater.from(context)
             .inflateTransition(R.transition.image_shared_element_transition)
-        transition.addListener(object : Transition.TransitionListener {
-            override fun onTransitionStart(transition: Transition) {
-                val viewHolder =
-                    (binding.moviesPager[0] as RecyclerView).findViewHolderForAdapterPosition(
-                        navArgs.index
-                    ) as? MovieDetailsViewHolder
-                        ?: return
-                val animator =
-                    ObjectAnimator.ofFloat(viewHolder.binding.description, "alpha", 0f, 1f)
-                        .setDuration(1000)
-                val animator2 =
-                    ObjectAnimator.ofFloat(viewHolder.binding.title, "alpha", 0f, 1f)
-                        .setDuration(1000)
-                val animator3 =
-                    ObjectAnimator.ofFloat(viewHolder.binding.gradient, "alpha", 0f, 1f)
-                        .setDuration(1000)
-                val animatorSet = AnimatorSet()
-                animatorSet.playTogether(animator, animator2, animator3)
-                animatorSet.start()
+        transition.addListeners(onStart = { _ ->
+            val viewHolder =
+                (binding.moviesPager[0] as RecyclerView).findViewHolderForAdapterPosition(
+                    navArgs.index
+                ) as? MovieDetailsViewHolder
+            viewHolder?.let {
+                AnimationUtils.getAlphaAnimatorOfViews(
+                    arrayOf(
+                        it.binding.description,
+                        it.binding.title,
+                        it.binding.gradient
+                    ), 1000
+                ).start()
             }
-
-            override fun onTransitionEnd(transition: Transition) {
-
-            }
-
-            override fun onTransitionCancel(transition: Transition) {
-
-            }
-
-            override fun onTransitionPause(transition: Transition) {
-
-            }
-
-            override fun onTransitionResume(transition: Transition) {
-
-            }
-
         })
 
         sharedElementEnterTransition = transition
@@ -112,8 +89,9 @@ class MovieDetailsPagerFragment : SharedElementFragment<MovieListViewModel>() {
 
     fun navigateBack() {
         val viewHolder =
-            (binding.moviesPager[0] as RecyclerView).findViewHolderForAdapterPosition(binding.moviesPager.currentItem) as? MovieDetailsViewHolder
-                ?: return
+            (binding.moviesPager[0] as RecyclerView).findViewHolderForAdapterPosition(
+                binding.moviesPager.currentItem
+            ) as? MovieDetailsViewHolder ?: return
         val sharedElements = FragmentNavigator.Extras.Builder()
             .addSharedElements(
                 mapOf(
