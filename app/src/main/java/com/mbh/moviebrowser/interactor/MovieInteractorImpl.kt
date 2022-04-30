@@ -55,20 +55,15 @@ class MovieInteractorImpl @Inject constructor(
     }
 
     override fun getMovieById(movieId: Long): Single<Movie> {
-        return Single.fromCallable { repository.getMovieById(movieId) }
+        return Single.fromCallable {
+            repository.getMovieById(movieId)
+                ?: apiService.getMovieById(movieId)
+                    .map { movieResult ->
+                        MovieDataModel.map(movieResult)
+                    }.blockingGet()
+        }
             .subscribeOn(Schedulers.io())
-            .flatMap { movieDataModel ->
-                if (movieDataModel == null) {
-                    apiService.getMovieById(movieId)
-                        .flatMap { movieResult ->
-                            Single.just(MovieDataModel.map(movieResult))
-                        }
-                } else {
-                    Single.just(movieDataModel)
-                }
-            }.map { dataModel ->
-                Movie.map(dataModel)
-            }
+            .map { Movie.map(it) }
     }
 
     override fun clearDataBase() {

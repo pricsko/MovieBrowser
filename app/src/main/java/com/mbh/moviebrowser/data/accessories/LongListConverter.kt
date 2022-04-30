@@ -16,7 +16,6 @@ class LongListConverter {
 
     @TypeConverter
     fun fromLongListToString(list: List<Long?>?): String? {
-        val gson = Gson()
-        return gson.toJson(list)
+        return Gson().toJson(list)
     }
 }

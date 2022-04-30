@@ -6,7 +6,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.mbh.moviebrowser.data.model.GenreDataModel
 import com.mbh.moviebrowser.data.model.MovieDataModel
-import io.reactivex.rxjava3.core.Single
 
 @Dao
 interface MovieDao {
@@ -25,12 +24,5 @@ interface MovieDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllGenres(genres: List<GenreDataModel>)
-
-    @Query("DELETE FROM GenreDataModel")
-    fun deleteGenres()
-
-    @Query("DELETE FROM MovieDataModel")
-    fun deleteMovieDataModels()
-
 
 }

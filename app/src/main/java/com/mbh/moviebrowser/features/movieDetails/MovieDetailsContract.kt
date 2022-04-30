@@ -11,5 +11,4 @@ interface MovieDetailsContract {
         fun fetchMovie(movieId: Long)
     }
 
-
 }

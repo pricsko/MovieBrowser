@@ -76,7 +76,7 @@ class MovieDetailsPagerFragment : SharedElementFragment<MovieListViewModel>() {
         sharedElementEnterTransition = transition
         exitTransition =
             TransitionInflater.from(context)
-                .inflateTransition(R.transition.grid_exit_transition)
+                .inflateTransition(R.transition.pager_exit_transition)
 
         postponeEnterTransition()
     }

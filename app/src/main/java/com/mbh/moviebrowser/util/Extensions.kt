@@ -7,7 +7,7 @@ import kotlin.math.roundToInt
 
 fun Float.toRatingFloat(maxValue: Float, requiredMaxValue: Float, stepSize: Float): Float {
     val ratingValue = this / (maxValue / requiredMaxValue)
-    return (((ratingValue / stepSize).roundToInt()) * stepSize)
+    return ((ratingValue / stepSize).roundToInt()) * stepSize
 }
 
 fun Fragment.getNavigationResult(key: String = "result") =

@@ -7,12 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.doOnPreDraw
 import androidx.navigation.fragment.navArgs
-import androidx.transition.Transition
 import androidx.transition.TransitionInflater
 import com.mbh.moviebrowser.databinding.FragmentMovieDetailsBinding
 import com.mbh.moviebrowser.features.BaseFragment
 import com.mbh.moviebrowser.injection.InjectionManager
 import com.mbh.moviebrowser.util.SharedElementArgs.DEFAULT_SHARED_ELEMENTS_TRANSITION_TIME
+import com.mbh.moviebrowser.util.addListeners
 
 class MovieDetailsFragment : BaseFragment<MovieDetailsViewModel>() {
 
@@ -61,28 +61,10 @@ class MovieDetailsFragment : BaseFragment<MovieDetailsViewModel>() {
         val sharedElementEnter =
             TransitionInflater.from(context).inflateTransition(android.R.transition.move)
                 .setDuration(DEFAULT_SHARED_ELEMENTS_TRANSITION_TIME)
-        sharedElementEnter.addListener(object : Transition.TransitionListener {
-            override fun onTransitionStart(transition: Transition) {
-                val animation = ObjectAnimator.ofFloat(binding.description, "alpha", 0f, 1f)
-                    .setDuration(DEFAULT_SHARED_ELEMENTS_TRANSITION_TIME * 2)
-                animation.start()
-            }
-
-            override fun onTransitionEnd(transition: Transition) {
-
-            }
-
-            override fun onTransitionCancel(transition: Transition) {
-
-            }
-
-            override fun onTransitionPause(transition: Transition) {
-
-            }
-
-            override fun onTransitionResume(transition: Transition) {
-
-            }
+        sharedElementEnter.addListeners(onStart = {
+            val animation = ObjectAnimator.ofFloat(binding.description, "alpha", 0f, 1f)
+                .setDuration(DEFAULT_SHARED_ELEMENTS_TRANSITION_TIME * 2)
+            animation.start()
         })
         sharedElementEnterTransition = sharedElementEnter
         enterTransition =
