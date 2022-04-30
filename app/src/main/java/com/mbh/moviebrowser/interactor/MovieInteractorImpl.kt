@@ -9,12 +9,15 @@ import com.mbh.moviebrowser.features.accessories.GenreProvider
 import com.mbh.moviebrowser.network.ApiService
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
+import java.util.concurrent.CountDownLatch
 import javax.inject.Inject
 
 class MovieInteractorImpl @Inject constructor(
     private val apiService: ApiService,
     private val repository: MovieRepository
 ) : MovieInteractor {
+
+    private var genreProviderLatch = CountDownLatch(1)
 
     override fun initGenres() {
         Single.fromCallable { repository.getAllGenres() }
@@ -30,8 +33,10 @@ class MovieInteractorImpl @Inject constructor(
                 } else {
                     Single.just(genreList)
                 }
-            }.subscribe { dataModelList ->
+            }
+            .subscribe { dataModelList ->
                 GenreProvider.loadGenreMap(Genre.mapList(dataModelList))
+                genreProviderLatch.countDown()
             }
     }
 
@@ -50,6 +55,8 @@ class MovieInteractorImpl @Inject constructor(
                     Single.just(movieDataModelList)
                 }
             }.map { dataModelList ->
+                // Wait for genreMap to be ready because Movie.mapList uses it
+                if (genreProviderLatch.count > 0) genreProviderLatch.await()
                 Movie.mapList(dataModelList)
             }
     }
